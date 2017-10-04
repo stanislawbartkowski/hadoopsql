@@ -22,7 +22,30 @@ It is not any kind of benchmarking and one should be extra careful to generalize
 5. Load data into Spark and execute queries using Spark SQL.
 6. Load data into HBase Phoenix and run queries through Phoenix SQL
 
+# Download data 
+
+* git clone https://github.com/stanislawbartkowski/hadoopsql.git
+* cd hadoopsql
+* tar xvfz data.tgz
+
 # Load data into MySQL database
+
+* Prepare MySQL (MariaDB) database. Embedded HDP MySQL database can be used.
+
+As admin user 
+
+* CREATE DATABASE TESTDB;
+* CREATE USER 'test'@'%' IDENTIFIED BY 'test';
+* GRANT ALL PRIVILEGES ON *.* TO 'test'@'%';
+
+Launch mysql console ad test user 
+* cd hadoopsql
+* mysql -h mod3.fyre.ibm.com -u test -p testdb
+
+Load data
+
+* source create.sql
+
 
 
 
