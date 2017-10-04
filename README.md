@@ -93,3 +93,24 @@ beeline -u "jdbc:hive2://{hive server}:10000/{username}" -n sb $@
 use testdb;
 ```
 Execute three queries
+
+# Run queries on Hive Parquet files
+```SQL
+create database testdb1;
+use testdb1;
+create table products stored as parquet as select * from testdb.products;
+create table customers stored as parquet as select * from testdb.customers;
+create table employees stored as parquet as select * from testdb.employees;
+create table sales stored as parquet as select * from testdb.sales;
+```
+Run three queries
+
+# Run queries on Hive OCR file
+```SQL
+create database testdb3;
+use testdb3;
+create table products stored as orc as select * from testdb.products;
+create table customers stored as orc as select * from testdb.customers;
+create table employees stored as orc as select * from testdb.employees;
+create table sales stored as orc as select * from testdb.sales;
+```
