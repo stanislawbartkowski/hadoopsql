@@ -142,5 +142,74 @@ values(current schema);
 CALL SYSHADOOP.HCAT_SYNC_OBJECTS( 'testdb1', '.*');
 \show tables;
 ```
+Run queries
 
+# Run queries in Big SQL on Hive OCR files.
+```BASH
+jsqsh bigsql
+``` 
+```SQL
+set current schema testdb3;
+values(current schema);
+CALL SYSHADOOP.HCAT_SYNC_OBJECTS( 'testdb3', '.*');
+\show tables;
+```
+Run queries
 
+# Spark SQL
+
+Make sure that MySQL JDBC driver is available
+```BASH
+ls /usr/share/java/mysql-connector-java.jar
+```
+
+Launch Spark Scala shell
+```BASH
+spark-shell --jars /usr/share/java/mysql-connector-java.jar --driver-memory 2g
+```
+Execute sequence of Scala commands. Data is loaded directly from MySQL testdb database and tranformed to Spark DF. Assign to jdbcHostname variable host name of MySQL database. show_timing function measure the execution time SQL query.
+```SCALA
+Class.forName("com.mysql.jdbc.Driver")
+val jdbcUsername = "test"
+val jdbcPassword = "test"
+val jdbcHostname = "mgm2"
+val jdbcHostname = {{{MySQL host name or iP address}}}
+val jdbcPort = 3306
+val jdbcDatabase ="testdb"
+val jdbcDriver = "com.mysql.jdbc.Driver"
+val jdbcUrl = s"jdbc:mysql://${jdbcHostname}:${jdbcPort}/${jdbcDatabase}?user=${jdbcUsername}&password=${jdbcPassword}"
+val connProp = new java.util.Properties()
+connProp.setProperty("driver", "com.mysql.jdbc.Driver") 
+
+val salesDF = spark.read.jdbc(jdbcUrl, "SALES", connProp).cache
+salesDF.show
+salesDF.registerTempTable("SALES")
+
+val customersDF = spark.read.jdbc(jdbcUrl, "CUSTOMERS", connProp).cache
+customersDF.show
+customersDF.registerTempTable("CUSTOMERS")
+
+val productsDF = spark.read.jdbc(jdbcUrl, "PRODUCTS", connProp).cache
+productsDF.show
+productsDF.registerTempTable("PRODUCTS")
+
+val employeeDF=spark.read.jdbc(jdbcUrl,"EMPLOYEES", connProp).cache
+employeeDF.show
+employeeDF.registerTempTable("EMPLOYEES")
+
+def show_timing[T](proc: => T): T = {
+    val start : Double =System.nanoTime()
+    val res = proc // call the code
+    val end :Double = System.nanoTime()
+    val e: Double  = (end-start)/1000000000
+    println("Time elapsed: " + e + " secs")
+    res
+}
+
+var res = spark.sql(" select salespersonid, sum(quantity) from SALES group by salespersonid")
+ show_timing({ res.show})
+var res = spark.sql("select * from (select salespersonid, sum(quantity) from SALES group by salespersonid) as s,EMPLOYEES where salespersonid = employeeid")
+ show_timing({ res.show})
+var res = spark.sql("select * from (select c.*,q from (select customerid,sum(quantity) as q from SALES group by customerid) as s,CUSTOMERS as c where c.customerid = s.customerid) as r order by q desc LIMIT 20")
+ show_timing({ res.show})
+```
