@@ -1,0 +1,61 @@
+
+#ZOO=helmeilnx198v.hus.fi
+#ZOO=mgm2
+ZOO=mycent2.sb.com,mycent1.sb.com
+PHOHOME=/usr/hdp/2.6.1.0-129/phoenix
+PHO=$PHOHOME/bin/sqlline.py 
+export HADOOP_USER_NAME=hbase
+
+deltable() {
+  local table=$1
+  $PHO  "$ZOO:/hbase-unsecure" << EOF
+    DELETE FROM $table ;
+EOF
+}
+
+recreateschema() {
+  $PHO  "$ZOO:/hbase-unsecure" pcreate.sql
+}
+
+impmr() {
+  local table=$1
+  local file=$2
+#  deltable $table
+  hdfs dfs -copyFromLocal -f $file.csv
+  hadoop jar $PHOHOME/phoenix-client.jar org.apache.phoenix.mapreduce.CsvBulkLoadTool -d '~' --table $table --input $file.csv -z "$ZOO:/hbase-unsecure"
+}
+
+imp() {
+  local table=$1
+  local file=$2
+  echo $table $file
+  python $PHOHOME/bin/psql.py -t $table -d '~' "$ZOO:/hbase-unsecure"  $file.csv
+}
+
+impall() {
+  imp SALES sales
+  imp CUSTOMERS customers
+  imp EMPLOYEES employees
+  imp PRODUCTS products
+}
+
+impmrsales() {
+  rm /tmp/spart*
+  split sales.csv -l 2000000 /tmp/spart
+  for f in /tmp/spart*; do 
+    mv $f salespart.csv
+    impmr SALES salespart
+  done
+  rm -f salespart.csv
+}
+
+impallmr() {
+  impmr CUSTOMERS customers
+  impmr EMPLOYEES employees
+  impmr PRODUCTS products
+  impmrsales
+}
+
+recreateschema
+
+impallmr

@@ -1,0 +1,20 @@
+
+
+importtable() {
+  local mytable=$1
+  local hivetable=$2
+  local split=$3
+  hdfs dfs -rm -r -f $mytable
+  sqoop import --connect jdbc:mysql://$MYSQLHOST/testdb --username=test --password=test --table=$mytable -split-by $split --hive-import --hive-overwrite --hive-table testdb.$hivetable --driver com.mysql.jdbc.Driver
+}
+
+
+#  MYSQHHOST=helmeilnx199v.hus.fi
+#  MYSQLHOST=mgm2
+  MYSQHHOST=mycent2.sb.com
+  MYSQLHOST=mirror
+
+  importtable CUSTOMERS customers customerid 
+  importtable EMPLOYEES employees employeeid 
+  importtable PRODUCTS products productid 
+  importtable SALES sales salesid 
