@@ -172,7 +172,6 @@ Execute sequence of Scala commands. Data is loaded directly from MySQL testdb da
 Class.forName("com.mysql.jdbc.Driver")
 val jdbcUsername = "test"
 val jdbcPassword = "test"
-val jdbcHostname = "mgm2"
 val jdbcHostname = {{{MySQL host name or iP address}}}
 val jdbcPort = 3306
 val jdbcDatabase ="testdb"
