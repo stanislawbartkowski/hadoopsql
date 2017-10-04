@@ -114,3 +114,33 @@ create table customers stored as orc as select * from testdb.customers;
 create table employees stored as orc as select * from testdb.employees;
 create table sales stored as orc as select * from testdb.sales;
 ```
+
+Run three queries
+
+# Prepare Big SQL environment
+
+Configure Big SQL connection using jsqsh command line utility.
+```BASH
+jsqsh --setup
+```
+Connection wizard -> Choose bigsql connection -> Provide password (5) -> Test -> Save
+When connection is configured, launch jsqsh with connection name as a parameter
+```BASH
+jsqsh bigsql
+``` 
+Before running queries, make sure that the user has EXECUTE privilege on SYSHADOOP.HCAT_SYNC_OBJECTS stored procedure.
+
+https://www.ibm.com/support/knowledgecenter/SSCRJT_5.0.0/com.ibm.swg.im.infosphere.biginsights.db2biga.doc/doc/biga_hadsyncobj.html
+
+# Run queries in Big SQL on Hive Parquet files.
+```BASH
+jsqsh bigsql
+``` 
+```SQL
+set current schema testdb1;
+values(current schema);
+CALL SYSHADOOP.HCAT_SYNC_OBJECTS( 'testdb1', '.*');
+\show tables;
+```
+
+
