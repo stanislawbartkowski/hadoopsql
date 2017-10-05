@@ -212,3 +212,23 @@ var res = spark.sql("select * from (select salespersonid, sum(quantity) from SAL
 var res = spark.sql("select * from (select c.*,q from (select customerid,sum(quantity) as q from SALES group by customerid) as s,CUSTOMERS as c where c.customerid = s.customerid) as r order by q desc LIMIT 20")
  show_timing({ res.show})
 ```
+# Phoenix HBase SQL
+
+Phoenix is SQL running on the top of HBase tables.
+
+Make sure that at least one Phoenix server is installed and running. Also make sure that Phoenix client file are installed on the host you want to run the test. Otherwise log on to the machine where Phonix Query server is installed.
+
+Identify hbase.zookeeper.quorum configuration parameter.
+
+```BASH
+cd hadoopsql/pho
+phoenix-sqlline {hbase.zookeeper.quorum}:/hbase-unsecure
+```
+Run pcreate.sql script file to create tables used during the test
+```
+!run hadoopsql/pho
+```
+
+
+
+
