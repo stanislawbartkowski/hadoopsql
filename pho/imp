@@ -1,9 +1,13 @@
 
 #ZOO=helmeilnx198v.hus.fi
 #ZOO=mgm2
-ZOO=mycent2.sb.com,mycent1.sb.com
-PHOHOME=/usr/hdp/2.6.1.0-129/phoenix
+#ZOO=mycent2.sb.com,mycent1.sb.com
+ZOO=mod3.fyre.ibm.com,mod1.fyre.ibm.com,mod2.fyre.ibm.com
+#PHOHOME=/usr/hdp/2.6.1.0-129/phoenix
+PHOHOME=/usr/hdp/2.6.2.0-205/phoenix
 PHO=$PHOHOME/bin/sqlline.py 
+
+# run stuff as hbase user to allow Phoenix load data file from /tmp directory
 export HADOOP_USER_NAME=hbase
 
 deltable() {

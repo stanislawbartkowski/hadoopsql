@@ -9,10 +9,10 @@ importtable() {
 }
 
 
-#  MYSQHHOST=helmeilnx199v.hus.fi
 #  MYSQLHOST=mgm2
-  MYSQHHOST=mycent2.sb.com
-  MYSQLHOST=mirror
+#  MYSQHHOST=mycent2.sb.com
+#  MYSQLHOST=mirror
+  MYSQLHOST=mod3.fyre.ibm.com
 
   importtable CUSTOMERS customers customerid 
   importtable EMPLOYEES employees employeeid 
