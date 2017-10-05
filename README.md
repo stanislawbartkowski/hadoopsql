@@ -218,7 +218,8 @@ Phoenix is SQL running on the top of HBase tables.
 
 ## Preparation
 
-Make sure that at least one Phoenix server is installed and running. Also make sure that Phoenix client file are installed on the host you want to run the test. Otherwise log on to the machine where Phonix Query server is installed.
+Make sure that at least one Phoenix server is installed and running. Unfortunately, I discovered that in HDP 2.6.2 Phoenix Query Server should be installed on every host where HBbase Region Server is running. Otherwise, HBase Region Server will not restart because of lack of some Java classes.
+Also make sure that Phoenix client file are installed on the host you want to run the test. Otherwise log on to the machine where Phoenix Query Server is installed.
 
 Goto HBase configuration -> Advanced -> Custom hbase-site -> Add Property -> hbase.table.sanity.check=false
 
@@ -229,8 +230,25 @@ cd hadoopsql/pho
 phoenix-sqlline {hbase.zookeeper.quorum}:/hbase-unsecure
 ```
 Run pcreate.sql script file to create tables used during the test
+```SQL
+!run pcreate.sql
 ```
-!run hadoopsql/pho
+From command line run (as hdfs user)
+```BASH
+hdfs dfs -setfacl -R -m user:hbase:rwx /tmp
+./imp
+```
+Command (hdfs dfs -setfacl -R -m user:hbase:rwx /tmp) is necessary because data loaded to HDFS /tmp directory as the current user should be later accessible by hbase user to populate HBase tables for Phoenix. Another solution is to add:
+```BASH
+export HADOOP_USER_NAME=hbase
+```
+to __imp__ script file.
+
+Modify __imp__ script file. Set ZOO environment variable to {hbase.zookeeper.quorum} variable. If necessary, adjust PHOHOME variable.
+
+Run script file
+```BASH
+./imp
 ```
 
 
