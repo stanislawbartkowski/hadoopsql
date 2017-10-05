@@ -21,6 +21,7 @@ It is not any kind of benchmarking and one should be extra careful to generalize
 4. Catalog Hive tables into IBM BigSQL. Run queries using Big SQL engine.
 5. Load data into Spark and execute queries using Spark SQL.
 6. Load data into HBase Phoenix and run queries through Phoenix SQL
+* There are huge differences in execution time while running the same command so I used to run the query three times one after the other and take the mean.
 
 # Queries under test
 
