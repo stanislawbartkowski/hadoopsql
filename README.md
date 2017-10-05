@@ -225,31 +225,14 @@ Goto HBase configuration -> Advanced -> Custom hbase-site -> Add Property -> hba
 
 Identify hbase.zookeeper.quorum configuration parameter.
 
-```BASH
-cd hadoopsql/pho
-phoenix-sqlline {hbase.zookeeper.quorum}:/hbase-unsecure
-```
-Run pcreate.sql script file to create tables used during the test
-```SQL
-!run pcreate.sql
-```
-From command line run (as hdfs user)
-```BASH
-hdfs dfs -setfacl -R -m user:hbase:rwx /tmp
-./imp
-```
-Command (hdfs dfs -setfacl -R -m user:hbase:rwx /tmp) is necessary because data loaded to HDFS /tmp directory as the current user should be later accessible by hbase user to populate HBase tables for Phoenix. Another solution is to add:
-```BASH
-export HADOOP_USER_NAME=hbase
-```
-to __imp__ script file.
-
-Modify __imp__ script file. Set ZOO environment variable to {hbase.zookeeper.quorum} variable. If necessary, adjust PHOHOME variable.
+Modify __hadoopsql/pho/imp__ script file. Set ZOO environment variable to {hbase.zookeeper.quorum} variable. If necessary, adjust PHOHOME variable.
 
 Run script file
 ```BASH
+cd hadoopsql/pho
 ./imp
 ```
+File sales.txt is to big to be swallowed in one go and has to be split to several parts more digestible.
 
 
 
