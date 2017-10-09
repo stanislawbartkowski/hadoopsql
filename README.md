@@ -235,6 +235,53 @@ cd hadoopsql/pho
 ```
 File sales.txt is to big to be swallowed in one go and has to be split to several parts more digestible.
 
+# Results
 
+## Cluster 1, BigInsights 4.2
+* 3 data node, 6 mgm nodes, HA
+* mgm nodes: 8 cores 32 GB
+* data nodes: 1 core 8 GB
+
+| Engine | Query 1 | Query 2 | Query 3
+|:-------|:-------:|:--------:|:------:|
+| MySql | 11.57 | 30.89 | 35.17
+| Hive text | 22 | 62 | 67
+| Hive Parquet | 33 | 60 | 86
+| Hive ORC | 27 | 63 | 79
+| Big SQL Parquet | 1.66 | 1.88 | 2.26
+| Big SQL ORC | 3.2 | 4.3 | 3.6
+| Spark SQL | 7 | 5 | 5
+| Phoenix(HBase) SQL | 17 | 19 | 17
+
+## Cluster 2, BigInsights 4.2
+
+* 3 mgm nodes, 2 data nodes
+* all nodes: 8 cores, 64 GB
+
+| Engine | Query 1 | Query 2 | Query 3
+|:-------|:-------:|:--------:|:------:|
+| MySql | 3.66 | 3.78 | 5.07
+| Hive text | 20.75 | 37.028 | 42.997
+| Hive Parquet | 22.148 | 40.173 | 47.962
+| Hive ORC | 19.238 | 35.332 | 40.71
+| Big SQL Parquet | <> | <> | <>
+| Big SQL ORC | 2.987 | 0.615 | 0.996
+| Spark SQL | 1 | 1 | 1-2
+| Phoenix(HBase) SQL | 16.669 | 15.594 | 16.473
+
+## Cluster 3, HDP 2.6.2 
+* docker, 2 nodes, mixed mgm and data
+* host machine: 16 GB, 8 cores
+
+| Engine | Query 1 | Query 2 | Query 3
+|:-------|:-------:|:--------:|:------:|
+| MySql | 3.66 | 3.78 | 5.07
+| Hive text | 20.75 | 37.028 | 42.997
+| Hive Parquet | 22.148 | 40.173 | 47.962
+| Hive ORC | 19.238 | 35.332 | 40.71
+| Big SQL Parquet | <> | <> | <>
+| Big SQL ORC | 2.987 | 0.615 | 0.996
+| Spark SQL | 1 | 1 | 1-2
+| Phoenix(HBase) SQL | 16.669 | 15.594 | 16.473
 
 
