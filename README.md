@@ -1,6 +1,6 @@
 # hadoopsql
 
-Test comparing performance of different SQL engines in Hadoop/IBM BigInsights/HortonWorks HDP environment. The following SQL engines are used:
+A test comparing the performance of different SQL engines in Hadoop/IBM BigInsights/HortonWorks HDP environment. The following SQL engines are used:
 * Hive on text files
 * Hive on Parquet files
 * Hive on OCR files
@@ -10,7 +10,7 @@ Test comparing performance of different SQL engines in Hadoop/IBM BigInsights/Ho
 * Phoenix HBase SQL
 
 The same data set is loaded into a particular surrounding and the same three SQL queries are launched and time spent to execute is taken.
-No optimization is done to boost the execution of a particular engine. Default configuation out of the box is used.
+No optimization is done to boost the execution of a particular engine. Default configuration out of the box is used.
 It is not any kind of benchmarking and one should be extra careful to generalize the results. 
 
 # Test scenario
@@ -21,11 +21,11 @@ It is not any kind of benchmarking and one should be extra careful to generalize
 4. Catalog Hive tables into IBM BigSQL. Run queries using Big SQL engine.
 5. Load data into Spark and execute queries using Spark SQL.
 6. Load data into HBase Phoenix and run queries through Phoenix SQL
-* There are huge differences in execution time while running the same command so I used to run the query three times one after the other and take the mean.
+* There are huge differences in execution time while running the same command so I used to run the query three times one after the other and calculate the arithmetic mean.
 
 # Queries under test
 
-Queries are simple : aggregate over single table, join two tables and join three tables.
+Queries are simple: aggregate over a single table, join two tables and join three tables.
 
 1. select salespersonid, sum(quantity) from SALES group by salespersonid
 2. select * from (select salespersonid, sum(quantity) from SALES group by salespersonid) as s,EMPLOYEES where salespersonid = employeeid
@@ -168,7 +168,7 @@ Launch Spark Scala shell
 ```BASH
 spark-shell --jars /usr/share/java/mysql-connector-java.jar --driver-memory 2g
 ```
-Execute sequence of Scala commands. Data is loaded directly from MySQL testdb database and tranformed to Spark DF. Assign to jdbcHostname variable host name of MySQL database. show_timing function measure the execution time SQL query.
+Execute sequence of Scala commands. Data is loaded directly from MySQL testdb database and tranformed to Spark DF. Assign to jdbcHostname variable host name of MySQL database. show_timing function measures the execution time SQL query.
 ```SCALA
 Class.forName("com.mysql.jdbc.Driver")
 val jdbcUsername = "test"
@@ -220,7 +220,7 @@ Phoenix is SQL running on the top of HBase tables.
 ## Preparation
 
 Make sure that at least one Phoenix server is installed and running. Unfortunately, I discovered that in HDP 2.6.2 Phoenix Query Server should be installed on every host where HBbase Region Server is running. Otherwise, HBase Region Server will not restart because of lack of some Java classes.
-Also make sure that Phoenix client file are installed on the host you want to run the test. Otherwise log on to the machine where Phoenix Query Server is installed.
+Also, make sure that Phoenix client files are installed on the host you want to run the test. Otherwise, log on to the machine where Phoenix Query Server is installed.
 
 Goto HBase configuration -> Advanced -> Custom hbase-site -> Add Property -> hbase.table.sanity.check=false
 
@@ -233,7 +233,7 @@ Run script file
 cd hadoopsql/pho
 ./imp
 ```
-File sales.txt is to big to be swallowed in one go and has to be split to several parts more digestible.
+File sales.txt is too big to be swallowed in one go and has to be split into several parts more digestible.
 
 # Results
 
