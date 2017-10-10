@@ -73,6 +73,10 @@ If you are running as a particular user, make sure that home HDFS directory is c
 hdfs dfs -mkdir /user/{username}
 hdfs dfs -chown {username} /user/{username}
 ```
+In case of simple HDFS authorization system add {user} access to hive directory (as user hdfs)
+```BASH
+hdfs dfs -chmod 777 /apps/hive/warehouse
+```
 
 * Customize imphive script file, provide host name for MySQL database
 * Create testdb database in Hive
