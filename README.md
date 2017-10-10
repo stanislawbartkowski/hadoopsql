@@ -54,7 +54,7 @@ GRANT ALL PRIVILEGES ON *.* TO 'test'@'%';
 Launch mysql console ad test user 
 ```BASH
 cd hadoopsql
-mysql -h mod3.fyre.ibm.com -u test -p testdb
+mysql -h {host} -u test -p testdb
 ```
 
 Load data
