@@ -239,6 +239,12 @@ cd hadoopsql/pho
 ```
 File sales.txt is too big to be swallowed in one go and has to be split into several parts more digestible.
 
+Launch phoenix command line
+```BASH
+phoenix-sqlline {zookeeper quorum}:/hbase-unsecure
+```
+Run queries
+
 # Results
 
 ## Cluster 1, BigInsights 4.2
