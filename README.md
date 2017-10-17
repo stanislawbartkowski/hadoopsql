@@ -78,7 +78,7 @@ In case of simple HDFS authorization system add {user} access to hive directory 
 hdfs dfs -chmod 777 /apps/hive/warehouse
 ```
 
-* Customize imphive script file, provide host name for MySQL database
+* Customize imphive script file, provide host name for MySQL database. Sometimes it is necessary to use capital letter; instead of testdb, TESTDB
 * Create testdb database in Hive
 ```SQL
 create database testdb;
