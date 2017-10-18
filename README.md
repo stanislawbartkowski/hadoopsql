@@ -25,7 +25,7 @@ It is not any kind of benchmarking and one should be extra careful to generalize
 
 # Queries under test
 
-Queries are simple: aggregate over a single table, join two tables and join three tables.
+Queries are simple: aggregate over a single table, join two tables and join nested table.
 
 1. select salespersonid, sum(quantity) from SALES group by salespersonid
 2. select * from (select salespersonid, sum(quantity) from SALES group by salespersonid) as s,EMPLOYEES where salespersonid = employeeid
@@ -311,5 +311,19 @@ Run queries
 | Spark SQL | 2.0 | 1.8 | 1.7
 | Phoenix(HBase) SQL | 19.1 (20,039 + 18,588 + 18,706) | 18.6 (  18,992 + 18,237 + 18,578) | 19 ( 18,602 + 19,445 + 19,065)
 
+## Cluster 5, BigInsights 4.2.0
+* No TEZ, no Big SQL
+* 5 mgm nodes and 8 data nodes
+* all nodes: 20 cores and 32GB
 
+| Engine | Query 1 | Query 2 | Query 3
+|:-------|:-------:|:--------:|:------:|
+| MySql | (4.22 + 4.02 + 3.82) | (3.81 + 5.81 + 4.19) | (4.18 + 4.23 + 4.27)
+| Hive text | (20.269 + 18.578 + 18.689) | (39.629 + 36.035 + 39.466) |  ( 42.713 + 45.542 + 49.328)
+| Hive Parquet | (21.507 + 21.551 + 21.542) | (46.15 + 40.978 + 39.897) | (46.317 + 46.298 + 51.62)
+| Hive ORC | (21.075 + 18.799 + 23.146) | (35.913 + 39.015 + 37.777) | (44.723 + 43.983 + 50.171)
+| Big SQL Parquet | | | 
+| Big SQL ORC | | | 
+| Spark SQL | (1.32 + 0.98 + 0.89) | (0.93 + 0.80 + 0.76) | (1.00 + 0.88 + 0.83)
+| Phoenix(HBase) SQL | (8.753 + 9.964 + 9.573) | (9.378 + 8.67 + 9.761) | (8.978 + 8.889 + 9.054)
 
