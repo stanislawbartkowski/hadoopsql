@@ -163,6 +163,11 @@ Run queries
 
 # Spark SQL
 
+The code below is relevant for Spark 2.X. To execute this code in Spark 1.6 replace spark with sqlContext. For instance:
+```SCALA
+val employeeDF=sqlContext.read.jdbc(jdbcUrl,"EMPLOYEES", connProp).cache
+```
+
 Make sure that MySQL JDBC driver is available
 ```BASH
 ls /usr/share/java/mysql-connector-java.jar
