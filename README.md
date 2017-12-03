@@ -30,6 +30,10 @@ Queries are simple: aggregate over a single table, join two tables and join nest
 1. select salespersonid, sum(quantity) from SALES group by salespersonid
 2. select * from (select salespersonid, sum(quantity) from SALES group by salespersonid) as s,EMPLOYEES where salespersonid = employeeid
 3. select * from (select c.*,q from (select customerid,sum(quantity) as q from SALES group by customerid) as s,CUSTOMERS as c where c.customerid = s.customerid) as r order by q desc LIMIT 20
+9. SELECT C.FIRSTNAME,C.LASTNAME,V.* FROM (SELECT P.PRODUCTID,S.SALESID,C.CUSTOMERID AS CID, S.QUANTITY * P.PRICE AS VAL FROM SALES S,PRODUCTS P,CUSTOMERS C WHERE P.PRODUCTID=S.PRODUCTID AND S.CUSTOMERID = C.CUSTOMERID GROUP BY P.PRODUCTID,S.SALESID,C.CUSTOMERID,S.QUANTITY,P.PRICE) AS V, CUSTOMERS AS C WHERE V.CID =  C.CUSTOMERID ORDER BY V.VAL DESC LIMIT 20
+9. SELECT /*+ USE_SORT_MERGE_JOIN */ C.FIRSTNAME,C.LASTNAME,V.* FROM (SELECT P.PRODUCTID,S.SALESID,C.CUSTOMERID AS CID, S.QUANTITY * P.PRICE AS VAL FROM SALES S,PRODUCTS P,CUSTOMERS C WHERE P.PRODUCTID=S.PRODUCTID AND S.CUSTOMERID = C.CUSTOMERID GROUP BY P.PRODUCTID,S.SALESID,C.CUSTOMERID,S.QUANTITY,P.PRICE) AS V, CUSTOMERS AS C WHERE V.CID =  C.CUSTOMERID ORDER BY V.VAL DESC LIMIT 20
+
+The last one should be executed on Phenix (HBase). It is the same as the previous one with the hint inside
 
 # Download data 
 
@@ -332,3 +336,12 @@ Run queries
 | Spark SQL | (1.32 + 0.98 + 0.89) | (0.93 + 0.80 + 0.76) | (1.00 + 0.88 + 0.83)
 | Phoenix(HBase) SQL | (8.753 + 9.964 + 9.573) | (9.378 + 8.67 + 9.761) | (8.978 + 8.889 + 9.054)
 
+## Cluster 6, HDP 2.6.3
+* PowerPC
+* 2 mgm nodes and 2 data nodes
+* all nodes: 8 cores and 64GB
+
+| Engine | Query 1 | Query 2 | Query 3 | Query 4
+|:-------|:-------:|:--------:|:------:|:------:|
+| MySql | 11.25 (11.23 + 11.22 + 11.31) | 11.21 (11.18 + 11.24 + 11.2) | 11.79 (11.58 + 11.92 + 11.87) | (unable to execute)
+| Hive text | 11.31 (19.373 + 8.812 + 5.761) | 7.28 (8.068 + 7.598 + 6.167) | 8.55 (9.528 + 8.101 + 8.006) | 42.06 ( 45.8 + 39.085 + 41.306)
