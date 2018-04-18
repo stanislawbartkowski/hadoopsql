@@ -3,9 +3,9 @@
 A test comparing the performance of different SQL engines in Hadoop/IBM BigInsights/HortonWorks HDP environment. The following SQL engines are used:
 * Hive on text files
 * Hive on Parquet files
-* Hive on OCR files
+* Hive on ORC files
 * Big SQL on Hive Parquet files
-* Big SQL on Hive OCR files
+* Big SQL on Hive ORC files
 * Spark SQL
 * Phoenix HBase SQL
 
@@ -17,7 +17,7 @@ It is not any kind of benchmarking and one should be extra careful to generalize
 
 1. Load data into MySQL database. Four tables are created: SALES, CUSTOMERS, EMPLOYEES, PRODUCTS
 2. Import data from MySQL into Hive using Sqoop utility
-3. Run queries on Hive text, Parquet and OCR
+3. Run queries on Hive text, Parquet and ORC
 4. Catalog Hive tables into IBM BigSQL. Run queries using Big SQL engine.
 5. Load data into Spark and execute queries using Spark SQL.
 6. Load data into HBase Phoenix and run queries through Phoenix SQL
@@ -114,7 +114,7 @@ create table sales stored as parquet as select * from testdb.sales;
 ```
 Run three queries
 
-# Run queries on Hive OCR file
+# Run queries on Hive ORC file
 ```SQL
 create database testdb3;
 use testdb3;
@@ -153,7 +153,7 @@ CALL SYSHADOOP.HCAT_SYNC_OBJECTS( 'testdb1', '.*');
 ```
 Run queries
 
-# Run queries in Big SQL on Hive OCR files.
+# Run queries in Big SQL on Hive ORC files.
 ```BASH
 jsqsh bigsql
 ``` 
