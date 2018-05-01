@@ -50,7 +50,7 @@ tar xvfz data.tgz
 As admin user 
 
 ```SQL
-CREATE DATABASE TESTDB;
+CREATE DATABASE testdb;
 CREATE USER 'test'@'%' IDENTIFIED BY 'test';
 GRANT ALL PRIVILEGES ON *.* TO 'test'@'%';
 ```
