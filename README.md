@@ -225,6 +225,9 @@ var res = spark.sql("select * from (select salespersonid, sum(quantity) from SAL
  show_timing({ res.show})
 var res = spark.sql("select * from (select c.*,q from (select customerid,sum(quantity) as q from SALES group by customerid) as s,CUSTOMERS as c where c.customerid = s.customerid) as r order by q desc LIMIT 20")
  show_timing({ res.show})
+var res = spark.sql("SELECT C.FIRSTNAME,C.LASTNAME,V.* FROM (SELECT P.PRODUCTID,S.SALESID,C.CUSTOMERID AS CID, S.QUANTITY * P.PRICE AS VAL FROM SALES S,PRODUCTS P,CUSTOMERS C WHERE P.PRODUCTID=S.PRODUCTID AND S.CUSTOMERID = C.CUSTOMERID GROUP BY P.PRODUCTID,S.SALESID,C.CUSTOMERID,S.QUANTITY,P.PRICE) AS V, CUSTOMERS AS C WHERE V.CID = C.CUSTOMERID ORDER BY V.VAL DESC LIMIT 20")
+ show_timing({ res.show})
+ 
 ```
 # Phoenix HBase SQL
 
