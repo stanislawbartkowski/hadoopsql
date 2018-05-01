@@ -235,7 +235,7 @@ Phoenix is SQL running on the top of HBase tables.
 
 ## Preparation
 
-Make sure that at least one Phoenix server is installed and running. Unfortunately, I discovered that in HDP 2.6.2 Phoenix Query Server should be installed on every host where HBbase Region Server is running. Otherwise, HBase Region Server will not restart because of lack of some Java classes.
+Make sure that at least one Phoenix server is installed and running. Unfortunately, I discovered that in HDP 2.6.2 Phoenix Query Server should be installed on every host where HBbase Region Server is running. Otherwise, HBase Region Server will not restart because of lack of some Java classes. In HDP 2.6.4 it is not necessary.
 Also, make sure that Phoenix client files are installed on the host you want to run the test. Otherwise, log on to the machine where Phoenix Query Server is installed.
 
 Goto HBase configuration -> Advanced -> Custom hbase-site -> Add Property -> hbase.table.sanity.check=false
@@ -253,7 +253,7 @@ File sales.txt is too big to be swallowed in one go and has to be split into sev
 
 Launch phoenix command line
 ```BASH
-phoenix-sqlline {zookeeper quorum}:/hbase-unsecure
+{path}/sqlline {zookeeper quorum}:/hbase-unsecure
 ```
 Run queries
 
