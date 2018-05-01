@@ -96,7 +96,7 @@ Sqoop creates Hive tables as text files. Connect to Hive engine and testdb datab
 
 Connect to Hive as a user:
 ```BASH
-beeline -u "jdbc:hive2://{hive server}:10000/{username}" -n sb $@
+beeline -u "jdbc:hive2://{hive server}:10000/{databasename}" -n {username} $@
 ```
 ```SQL
 use testdb;
