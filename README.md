@@ -101,7 +101,7 @@ beeline -u "jdbc:hive2://{hive server}:10000/{databasename}" -n {username} $@
 ```SQL
 use testdb;
 ```
-Execute three queries
+Execute four queries
 
 # Run queries on Hive Parquet files
 ```SQL
