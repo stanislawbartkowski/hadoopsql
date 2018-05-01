@@ -33,7 +33,7 @@ Queries are simple: aggregate over a single table, join two tables and join nest
 9. SELECT C.FIRSTNAME,C.LASTNAME,V.* FROM (SELECT P.PRODUCTID,S.SALESID,C.CUSTOMERID AS CID, S.QUANTITY * P.PRICE AS VAL FROM SALES S,PRODUCTS P,CUSTOMERS C WHERE P.PRODUCTID=S.PRODUCTID AND S.CUSTOMERID = C.CUSTOMERID GROUP BY P.PRODUCTID,S.SALESID,C.CUSTOMERID,S.QUANTITY,P.PRICE) AS V, CUSTOMERS AS C WHERE V.CID =  C.CUSTOMERID ORDER BY V.VAL DESC LIMIT 20
 9. SELECT /*+ USE_SORT_MERGE_JOIN */ C.FIRSTNAME,C.LASTNAME,V.* FROM (SELECT P.PRODUCTID,S.SALESID,C.CUSTOMERID AS CID, S.QUANTITY * P.PRICE AS VAL FROM SALES S,PRODUCTS P,CUSTOMERS C WHERE P.PRODUCTID=S.PRODUCTID AND S.CUSTOMERID = C.CUSTOMERID GROUP BY P.PRODUCTID,S.SALESID,C.CUSTOMERID,S.QUANTITY,P.PRICE) AS V, CUSTOMERS AS C WHERE V.CID =  C.CUSTOMERID ORDER BY V.VAL DESC LIMIT 20
 
-The last one should be executed on Phenix (HBase). It is the same as the previous one with the hint inside
+The last one should be executed on Phoenix (HBase). It is the same as the previous one with the hint inside
 
 # Download data 
 
@@ -112,7 +112,7 @@ create table customers stored as parquet as select * from testdb.customers;
 create table employees stored as parquet as select * from testdb.employees;
 create table sales stored as parquet as select * from testdb.sales;
 ```
-Run three queries
+Run four queries
 
 # Run queries on Hive ORC file
 ```SQL
@@ -124,7 +124,7 @@ create table employees stored as orc as select * from testdb.employees;
 create table sales stored as orc as select * from testdb.sales;
 ```
 
-Run three queries
+Run four queries
 
 # Prepare Big SQL environment
 
