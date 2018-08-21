@@ -412,7 +412,9 @@ Local cluster based on KVM machines
 # Cluster BigInsights 4.2 and BigSQL
 
 4 mgm nodes + 5 data nodes
+
 750GB, 40 cores
+
 no TEZ
 
 | Engine | Query 1 | Query 2 | Query 3 | Query 4
