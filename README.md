@@ -180,6 +180,7 @@ ls /usr/share/java/mysql-connector-java.jar
 Launch Spark Scala shell
 ```BASH
 spark-shell --jars /usr/share/java/mysql-connector-java.jar --driver-memory 2g
+spark-shell --jars /usr/share/java/mysql-connector-java.jar --master yarn --executor-memory 2g
 ```
 Execute sequence of Scala commands. Data is loaded directly from MySQL testdb database and tranformed to Spark DF. Assign to jdbcHostname variable host name of MySQL database. show_timing function measures the execution time SQL query.
 ```SCALA
