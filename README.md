@@ -167,6 +167,8 @@ Run queries
 
 # Spark SQL
 
+You can download Zeppelin notebook containing the code below [_mytest_test%20spark.json] . To run it in Zeppelin you have to enahnce spark.executor.memory to at leat 2 GB.
+
 The code below is relevant for Spark 2.X. To execute this code in Spark 1.6 replace spark with sqlContext. For instance:
 ```SCALA
 val employeeDF=sqlContext.read.jdbc(jdbcUrl,"EMPLOYEES", connProp).cache
