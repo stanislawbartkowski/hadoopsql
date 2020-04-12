@@ -1,5 +1,7 @@
 # hadoopsql
 
+# This project is deprecated and not under development
+
 A test comparing the performance of different SQL engines in Hadoop/IBM BigInsights/HortonWorks HDP environment. The following SQL engines are used:
 * Hive on text files
 * Hive on Parquet files
